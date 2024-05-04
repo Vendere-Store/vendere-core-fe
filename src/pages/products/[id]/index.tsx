@@ -1,11 +1,11 @@
 import dynamic from 'next/dynamic';
 import React, { Suspense } from 'react';
 
-const RemotePage = dynamic(() => import('remote/Products' as any), {
+const RemotePage = dynamic(() => import('remote/ProductDetails' as any), {
   suspense: true
 });
 
-export function ProductsList(props: any) {
+export function ProductDetails(props: any) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <RemotePage {...props} />
@@ -13,4 +13,4 @@ export function ProductsList(props: any) {
   );
 }
 
-export default ProductsList;
+export default ProductDetails;
