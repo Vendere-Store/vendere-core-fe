@@ -1,21 +1,7 @@
-import dynamic from 'next/dynamic';
-
-const RemotePage = dynamic(() => import('remote/Products'));
-
-export function LocalPage(props) {
-  return <RemotePage {...props} />
+const Main = () => {
+  return (
+      <h1>Vendere store</h1>
+  )
 }
 
-export const getServerSideProps = async (ctx) => {
-  const remotePage = await import('remote/Products');
-
-  if (remotePage.getServerSideProps) {
-    return remotePage.getServerSideProps(ctx)
-  }
-
-  return {
-    props: {},
-  }
-}
-
-export default LocalPage;
+export default Main
