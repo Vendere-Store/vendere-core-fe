@@ -35,12 +35,19 @@ jobs:
       - name: Setup SSH Tunnel
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_SERVER }}  # Use a more descriptive name like SSH_SERVER
+          host: ${{ secrets.SSH_SERVER }}  # Assume SSH_SERVER is the public IP or hostname
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
-            ssh -f -L 8443:192.168.49.2:8443 -N ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }}
+            ssh -f -L 8443:192.168.49.2:8443 -N &
+            sleep 10  # Wait to ensure the tunnel is set up
+            if nc -z localhost 8443; then
+              echo "SSH tunnel is up and running on localhost:8443"
+            else
+              echo "Failed to establish SSH tunnel"
+              exit 1
+            fi
 
       - name: Set up Minikube kubectl context
         run: |
@@ -48,7 +55,7 @@ jobs:
           kubectl config set-credentials minikube-user --client-certificate=${{ secrets.CLIENT_CERT }} --client-key=${{ secrets.CLIENT_KEY }} --embed-certs=true
           kubectl config set-context minikube --cluster=minikube --user=minikube-user
           kubectl config use-context minikube
-      
+    
 
       - name: Deploy Helm chart
         uses: azure/setup-helm@v1
