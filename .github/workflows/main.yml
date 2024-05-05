@@ -14,13 +14,13 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Login to Docker registry
-      run: docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_ACCESS_TOKEN }}" https://index.docker.io/v1/
+      run: docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_ACCESS_TOKEN }}"
 
     - name: Build Docker image
-      run: docker build -t sh0n3l/sh0n3/vendere-core-fe:latest .
+      run: docker build -t sh0n3l/vendere-core-fe:latest .
 
     - name: Push Docker image
-      run: docker push sh0n3l/sh0n3/vendere-core-fe:latest
+      run: docker push /sh0n3/vendere-core-fe:latest
 
     - name: Configure Kubernetes context
       run: |
