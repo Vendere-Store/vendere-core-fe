@@ -12,25 +12,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Login to Docker registry
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: Dockerfile
-          push: true
-          tags: sh0n3/vendere-core-fe:latest
-
-      - name: Install kubectl
-        uses: azure/setup-kubectl@v1
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v1
+#
+#      - name: Login to Docker registry
+#        uses: docker/login-action@v1
+#        with:
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+#
+#      - name: Build and push Docker image
+#        uses: docker/build-push-action@v2
+#        with:
+#          context: .
+#          file: Dockerfile
+#          push: true
+#          tags: sh0n3/vendere-core-fe:latest
+#
+#      - name: Install kubectl
+#        uses: azure/setup-kubectl@v1
 
       - name: Setup SSH Tunnel
         uses: appleboy/ssh-action@master
