@@ -45,7 +45,7 @@ jobs:
             chmod 600 /tmp/ssh_key
             
             # Set up the SSH tunnel using the temporary key file
-            ssh -i /tmp/ssh_key -f -L 8443:192.168.49.2:8443 -N -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} &
+            ssh -i /tmp/ssh_key -f -L 127.0.0.1:8443:192.168.49.2:8443 -N -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} &
             sleep 10  # Wait to ensure the tunnel is set up
             
             # Check if the tunnel is up
