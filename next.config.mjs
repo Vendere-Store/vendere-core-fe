@@ -5,7 +5,9 @@ const remotes = (isServer) => {
     const location = isServer ? 'ssr' : 'chunks';
     return {
         // specify remotes
-        remote: `remote@http://localhost:3001/_next/static/${location}/remoteEntry.js`,
+        // remote: `remote@http://localhost:3001/_next/static/${location}/remoteEntry.js`,
+        remote: `remote@http://products.vendere.store/_next/static/${location}/remoteEntry.js`,
+
     };
 }
 
