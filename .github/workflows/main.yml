@@ -31,6 +31,14 @@ jobs:
 #
 #      - name: Install kubectl
 #        uses: azure/setup-kubectl@v1
+      - name: Check and Free Up Port 8443
+        run: |
+          echo "Checking if port 8443 is in use..."
+          sudo lsof -i :8443 || echo "Port 8443 is free"
+          if sudo lsof -i :8443; then
+            echo "Port 8443 is in use, attempting to free it..."
+            sudo fuser -k 8443/tcp || true
+          fi
 
       - name: Setup SSH Tunnel
         uses: appleboy/ssh-action@master
@@ -77,3 +85,8 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: helm upgrade --install vendere-products-fe ./helm/vendere-products-fe --namespace default --create-namespace
+
+      - name: Cleanup SSH Tunnel
+        if: always()  # This ensures the cleanup step runs regardless of job success or failure
+        run: |
+          sudo fuser -k 8443/tcp || true
