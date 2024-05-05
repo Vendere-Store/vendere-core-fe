@@ -15,11 +15,10 @@ jobs:
 
     - name: Login to Docker registry
       run: |
-        echo Logging in to Docker Hub...
-        echo Username: ${{ secrets.DOCKER_USERNAME }}
-        echo Password length: ${#{{ secrets.DOCKER_PASSWORD }}}
-        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin https://index.docker.io/v1/
-
+        echo "Logging in to Docker Hub..."
+        echo "Username: ${{ secrets.DOCKER_USERNAME }}"
+        echo "Password length: ${#DOCKER_PASSWORD}"
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin https://index.docker.io/v1/
 
     - name: Build Docker image
       run: docker build -t sh0n3l/sh0n3/vendere-core-fe:latest .
