@@ -40,14 +40,24 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
-            ssh -f -L 8443:192.168.49.2:8443 -N  shone@77.237.247.251 &
+            # Save the SSH key to a temporary file
+            echo "${{ secrets.SSH_KEY }}" > /tmp/ssh_key
+            chmod 600 /tmp/ssh_key
+            
+            # Set up the SSH tunnel using the temporary key file
+            ssh -i /tmp/ssh_key -f -L 8443:192.168.49.2:8443 -N -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} &
             sleep 10  # Wait to ensure the tunnel is set up
+            
+            # Check if the tunnel is up
             if nc -z localhost 8443; then
               echo "SSH tunnel is up and running on localhost:8443"
             else
               echo "Failed to establish SSH tunnel"
               exit 1
             fi
+            
+            # Clean up the key file
+            rm /tmp/ssh_key
 
       - name: Set up Minikube kubectl context
         run: |
