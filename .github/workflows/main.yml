@@ -22,12 +22,6 @@ jobs:
     - name: Push Docker image
       run: docker push sh0n3l/sh0n3/vendere-core-fe:latest
 
-    - name: Setup Minikube
-      uses: azure/setup-minikube@v1
-      with:
-        minikube-version: 'latest'  # or specify a version if needed
-        kubectl-version: 'latest'    # or specify a version if needed
-
     - name: Configure Kubernetes context
       run: |
         kubectl config set-cluster minikube --server=http://77.237.247.251 --certificate-authority=$HOME/.minikube/ca.crt --embed-certs=true &&
@@ -35,6 +29,5 @@ jobs:
         kubectl config set-context minikube --cluster=minikube --user=user &&
         kubectl config use-context minikube
 
-
     - name: Deploy Helm chart
-      run: helm install your-release-name helm/vendere-products-fe -n default --create-namespace
+      run: helm install vendere-products-fe helm/vendere-products-fe -n default --create-namespace
