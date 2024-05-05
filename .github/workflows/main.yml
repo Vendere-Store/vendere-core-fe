@@ -40,7 +40,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
-            ssh -f -L 8443:192.168.49.2:8443 ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} -N &
+            ssh -f -L 8443:192.168.49.2:8443 -N  shone@77.237.247.251 &
             sleep 10  # Wait to ensure the tunnel is set up
             if nc -z localhost 8443; then
               echo "SSH tunnel is up and running on localhost:8443"
