@@ -81,10 +81,10 @@ jobs:
           version: 'latest'
 
       - name: Update Helm dependencies
-        run: helm dependency update ./helm/vendere-products-fe
+        run: helm dependency update ./helm/vendere-core-fe
 
       - name: Deploy to Kubernetes
-        run: helm upgrade --install vendere-products-fe ./helm/vendere-products-fe --namespace default --create-namespace
+        run: helm upgrade --install vendere-core-fe ./helm/vendere-core-fe --namespace default --create-namespace
 
       - name: Cleanup SSH Tunnel
         if: always()  # This ensures the cleanup step runs regardless of job success or failure

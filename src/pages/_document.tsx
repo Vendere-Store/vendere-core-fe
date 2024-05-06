@@ -5,6 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         {/* Include Tailwind CSS CDN link */}
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src="https://cdn.tailwindcss.com"></script>
       </Head>
       <body>
