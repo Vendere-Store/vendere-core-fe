@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: vendere-core-fe
 spec:
+  ingressClassName: nginx  # Updated to use the existing default class
   rules:
     - host: vendere.store
       http:
