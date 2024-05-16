@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import React, { Suspense } from 'react';
 
-const RemotePage = dynamic(() => import('remote/ProductDetails' as any), {
+const RemotePage = dynamic(() => import('products/ProductDetails' as any), {
   suspense: true
 });
 

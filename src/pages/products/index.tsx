@@ -1,16 +1,23 @@
-import dynamic from 'next/dynamic';
-import React, { Suspense } from 'react';
+import {lazy, Suspense} from 'react'
+import {loadRemote} from '@module-federation/runtime'
 
-const RemotePage = dynamic(() => import('remote/Products' as any), {
-  suspense: true
-});
+const ShopPage = lazy(() => loadRemote('products/Products'));
 
-export function ProductsList(props: any) {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <RemotePage {...props} />
-    </Suspense>
-  );
+const Shop = (props) => {
+    return (
+        <Suspense fallback={'loading'}>
+            <ShopPage {...props}/>
+        </Suspense>
+    )
 }
 
-export default ProductsList;
+Shop.getInitialProps = async (ctx)=>{
+    const res = await loadRemote('products/Products')
+    console.log('res', res)
+
+
+    return res.default.getInitialProps(ctx)
+}
+
+
+export default Shop;
