@@ -1,16 +1,25 @@
-import dynamic from 'next/dynamic';
-import React, { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
+import { loadRemote } from '@module-federation/runtime';
+import { GetServerSidePropsContext } from 'next';
 
-const RemotePage = dynamic(() => import('products/ProductDetails' as any), {
-  suspense: true
-});
+const PdpPage = lazy(() => loadRemote('products/ProductDetails') as any);
 
-export function ProductDetails(props: any) {
+const Pdp = (props: any) => {
+  console.log('props', props);
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <RemotePage {...props} />
+    <Suspense fallback={'loading'}>
+      <PdpPage {...props} />
     </Suspense>
   );
-}
+};
 
-export default ProductDetails;
+Pdp.getInitialProps = async (ctx: GetServerSidePropsContext) => {
+    const remoteModule = await loadRemote('products/ProductDetails') as any;
+    if (remoteModule && remoteModule.default && remoteModule.default.getInitialProps) {
+        return await remoteModule.default.getInitialProps(ctx);
+    }
+    return {};
+};
+
+
+export default Pdp;
