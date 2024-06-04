@@ -17,21 +17,21 @@ resources:
   limits:
     memory: "128Mi"
     cpu: "500m"
-
-ingress:
-  enabled: true
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-  hosts:
-    - host: vendere.store
-      paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: vendere-core-fe
-              port:
-                number: 3000
+#
+#ingress:
+#  enabled: true
+#  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /
+#  hosts:
+#    - host: vendere.store
+#      paths:
+#        - path: /
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: vendere-core-fe
+#              port:
+#                number: 3000
 
 controller:
   ingressClass: "my-nginx-ingress"
