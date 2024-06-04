@@ -4,7 +4,7 @@ metadata:
   name: vendere-core-fe-ingress
   annotations:
     meta.helm.sh/release-name: vendere-core-fe
-    meta.helm.sh/release-namespace: default
+    meta.helm.sh/release-namespace: vendere-fe
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx-fe
