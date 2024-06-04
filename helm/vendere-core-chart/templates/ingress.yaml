@@ -1,9 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: vendere-core-fe
+  name: vendere-core-fe-ingress
+  annotations:
+    meta.helm.sh/release-name: vendere-core-fe
+    meta.helm.sh/release-namespace: default
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx  # Updated to use the existing default class
+  ingressClassName: nginx
   rules:
     - host: vendere.store
       http:
@@ -12,6 +16,10 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: vendere-core-fe
+                name: vendere-core-fe-service
                 port:
-                  number: 3000
+                  number: 80
+{{/*  tls:*/}}
+{{/*    - hosts:*/}}
+{{/*        - vendere.store*/}}
+{{/*      secretName: vendere-store-tls*/}}
